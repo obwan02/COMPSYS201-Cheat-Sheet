@@ -8,7 +8,7 @@ The GPIO ports can be used to read and write digital data to certain pins on the
 - Port C: (6 pins + RESET) OR 7 pins
 - Port D: 8 pins
 
-If you want to detect changes on a pin, you can use the [Pin Change Interrupt](interrupts.html#pin-change-interrupt) instead of constantly polling a pin.
+If you want to detect changes on a pin, you can use the [Pin Change Interrupt](interrupts.md#pin-change-interrupt) instead of constantly polling a pin.
 
 #### Functionality Table
 The GPIO registers have some extra functionality that can be activated by setting bits in `PORTx` or `PINx` in different modes. When pin `Pxn` (e.g. `PC1`. `PB7`) is configured to read input, setting `PORTxn` will actiavte the pull up resistor for that specific pin. When `Pxn` is configured to write output, setting `PINxn` will invert the value of `PORTxn` on that specific pin. The above functionality is summarised in the table below.
@@ -44,7 +44,7 @@ Differences:
 - Timer 1 has an input detection feature that stores the internal clock value of rising/falling edge into `ICR1` and then triggers an interrupt.
 
 #### CTC Mode
-TODO
+When CTC mode is enabled, the counter is cleared when the internal counter value == `OCRnA`. `OCRnA` provides the top value for the counter.
 
 #### PWM Mode
 TODO
@@ -60,6 +60,7 @@ Timer 0 also has a few register/flags that define certain values:
 - Output pin control flags: `COM0A[1:0]` and `COM0B[1:0]` in `TCCR0A`
 - Output compare registers: `OCR0A` and `OCR0B` are used for certain comparisons the timer makes 
 - Output pins: `OC0A` and `OC0B` can be used as output
+- Mask bt
 
 #### Operation Mode Control Bits
 
