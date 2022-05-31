@@ -28,7 +28,7 @@ Note that this can have the affect of inverting the incoming signal on a pin.
 
 ## Timers
 
-There are 3 timers in the ATMEGA328P. All timers have 4 different modes of operating (that we care about). These modes are 'Normal Mode', 'CTC Mode', 'Fast PWM Mode' and 'Phase Correct PWM Mode'. All timers have a a prescaler that they can use to decrease the number of ticks the timer counts per second (decreasing accuracy, increasing length).
+There are 3 timers in the ATMEGA328P. All timers have 4 different modes of operating (that we care about). These modes are 'Normal Mode', 'CTC Mode', 'Fast PWM Mode' and 'Phase Correct PWM Mode'. All timers have a a prescaler that they can use to decrease the number of ticks the timer counts per second (decreasing accuracy, increasing length). Timers can also generate waveforms. This can be done in 'Normal' and 'CTC' modes but it is not recommended. Instead use a 'PWM' mode for generating high frequency waves.
 
 The normal functionality of timers shall now be listed, then with a separate list below to show notable features of individual timers.
 
@@ -47,7 +47,11 @@ Differences:
 When CTC mode is enabled, the counter is cleared when the internal counter value == `OCRnA`. `OCRnA` provides the top value for the counter.
 
 #### PWM Mode
-TODO
+PWM Mode is the recommended mode for generating waveforms on the `OCnA` and `OCnB` pins. There are 2 different PWM modes: fast and phase correct.
+
+Fast PWM Mode counts from the bottom to the top, then starts from the bottom again.
+
+Phase correct PWM mode count from bottom to the top, then counts back down to the bottom again. 
 
 ### Timer 0 
 Timer 0 is an 8 bit timer and has no other special features. It has 3 important iterrupts: an overflow interrupt, a compare with a interrupt and a compare with b interrupt. The maximum value Timer 0 can count up to is 256.
@@ -60,7 +64,6 @@ Timer 0 also has a few register/flags that define certain values:
 - Output pin control flags: `COM0A[1:0]` and `COM0B[1:0]` in `TCCR0A`
 - Output compare registers: `OCR0A` and `OCR0B` are used for certain comparisons the timer makes 
 - Output pins: `OC0A` and `OC0B` can be used as output
-- Mask bt
 
 #### Operation Mode Control Bits
 
@@ -72,7 +75,7 @@ Timer 0 also has a few register/flags that define certain values:
 |Fast PWM          |0 	     |1        |1        |0xFF   |Bottom         |Max           |
 |**RESERVED**      |1 	     |0        |0        |       |               |              |
 |PWM Phase Correct |1 	     |0        |1        |`OCRA` |Top            |Bottom        |
-|**Reserved**      |1 	     |1        |0        |       |               |              |
+|**RESERVED**      |1 	     |1        |0        |       |               |              |
 |Fast PWM          |1 	     |1        |1        |`OCRA` |Bottom         |Top           |
 
 #### Clock Select Control Bits
@@ -96,7 +99,10 @@ Timer 0 also has a few register/flags that define certain values:
 |1         |1         |Set `OC0x` on compare match with `OCR0x` |
 
 #### Interrupts
-TODO
+
+- [Overflow interrupt](interrupts/README.md#timer-overflow-interrupt) 
+- [Compare with A interrupt](interrupts/README.md#timer-compare-A-interrupt)
+- [Compare with B interrupt](interrupts/README.md#timer-compare-B-interrupt)
 
 
 

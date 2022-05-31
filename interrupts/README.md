@@ -55,3 +55,78 @@ These interrupts can detect changes on select pins. `PCINT0` detects changes on 
 PCMSK1 |= (1 << PCINT12); // Detect changes on PCINT12
 PCICR  |= (1 << PCEI1); // Enable interrupts for PCINT0  
 ```
+
+## Timer Overflow Interrupt
+This interrupt occurs when a timer's internal clock overflows. This interrupt is available for timer 0, timer 1 and timer 2.
+
+- ISR C Name: `TIMER0_OVF_vect/TIMER1_OVF_vect/TIMER2_OVF_vect`
+- Mask Register: `TOIE0` in `TIMSK0`, `TOIE1` in `TIMSK1` and `TOIE2` in `TIMSK2`
+- No Control Registers
+- Flag Register: `TOV0` in `TIFR0`, `TOV1` in `TIFR1` and `TOV2` in `TIFR2`
+
+### C Code Usage
+
+```c
+ISR(TIMER0_OVF_vect) {
+    PORTB ~= (1 << PB3);
+}
+
+int main() {
+    ...
+    TCCR0B |= (1 << CS00); // Set no prescaler
+    TIMSK0 |= (1 << TOIE0); /// Enable overflow interrupt
+    ...
+    sei();
+} 
+```
+
+## Timer Compare A Interrupt
+This interrupt occurs when a timers internal value == `OCRnA`.
+
+- ISR C Name: `TIMER0_COMPA_vect/TIMER1_COMPA_vect/TIMER2_COMPA_vect`
+- Mask Register: `OCF0A` in `TIMSK0`, `OCF1A` in `TIMSK1` and `OCF2A` in `TIMSK2`
+- No Control Registers
+- Flag Register: `OCF0A` in `TIFR0`, `OCF1A` in `TIFR1` and `OCF2A` in `TIFR2`
+
+### C Code Usage
+
+```c
+ISR(TIMER1_COMPA_vect) {
+    PORTB ~= (1 << PB3);
+}
+
+int main() {
+    ...
+    OCR1A = 0xee; // Count up to 238
+    //TODO: CTC MODE HERE
+    TCCR1B |= (1 << CS00); // Set no prescaler
+    TIMSK1 |= (1 << OCF1A); //  Enable comp a interrupt
+    ...
+    sei();
+} 
+```
+
+## Timer Compare B Interrupt
+This interrupt occurs when a timers internal value == `OCRnA`.
+
+- ISR C Name: `TIMER0_COMPB_vect/TIMER1_COMPB_vect/TIMER2_COMPB_vect`
+- Mask Register: `OCF0B` in `TIMSK0`, `OCF1B` in `TIMSK1` and `OCF2B` in `TIMSK2`
+- No Control Registers
+- Flag Register: `OCF0B` in `TIFR0`, `OCF1B` in `TIFR1` and `OCF2B` in `TIFR2`
+
+### C Code Usage
+
+```c
+ISR(TIMER1_COMPB_vect) {
+    PORTB ~= (1 << PB3);
+}
+
+int main() {
+    ...
+    OCR1B = 0xee; // Interrupt when counter = 238
+    TCCR1B |= (1 << CS00); // Set no prescaler
+    TIMSK1 |= (1 << OCF1B); //  Enable comp a interrupt
+    ...
+    sei();
+} 
+```
