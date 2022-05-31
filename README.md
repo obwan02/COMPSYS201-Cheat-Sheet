@@ -2,6 +2,9 @@
 
 For an overview of interrupts go to the [interrupt page](interrupts/README.md).
 
+## Pin Config
+![The pin configuration of the ATMEGA328P](pin_config.png)
+
 ## GPIO
 The GPIO ports can be used to read and write digital data to certain pins on the ATMEGA328P. There are 3 different ports which each have a different number of pins:
 
