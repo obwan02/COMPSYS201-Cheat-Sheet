@@ -22,7 +22,7 @@ These interrupts can detect falling edges, rising edges or a low level on pins I
 - Flag Register: `INTF0/INTF1` are set when the `INT0/INT1` interrupt occurs. 
 
 ### Control Bit Table
-`ISCn0` | `ISCn1` | Description
+`ISCn1` | `ISCn0` | Description
 --------|---------|------------
 0       | 0       | Interrupt on low level on pin `INTn`
 0       | 1       | Interrupt on any change on pin `INTn`
@@ -38,6 +38,8 @@ EICMSK |= (1 << INT1); // Enable external interrupt 1
 
 ## Pin Change Interrupt
 These interrupts can detect changes on select pins. `PCINT0` detects changes on pins `PCINT[7:0]`, `PCINT1` detects changes on pins `PCINT[14:8]` and `PCINT2` detects changes on pins `PCINT[23:16]`. 
+
+Note the that the `PCINT[7:0]` pins are the GPIO port B pins, `PCINT[14:8]` are the GPIO port C pins, and `PCINT[23:16]` are the GPIO port D pins. 
 
 - ISR C Name: `PCINT0_vect/PCINT1_vect/PCINT2_vect`
 - Mask Register: `PCINT[7:0]` in `PCMSK0`, `PCINT[14:8]` in `PCMSK1` and `PCINT[23:16]` in `PCMSK2`.

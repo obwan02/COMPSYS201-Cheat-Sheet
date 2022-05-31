@@ -1,5 +1,6 @@
 # COMPSYS201 Cheat Sheet
 
+For an overview of interrupts go to the [interrupt page](interrupts/README.md).
 
 ## GPIO
 The GPIO ports can be used to read and write digital data to certain pins on the ATMEGA328P. There are 3 different ports which each have a different number of pins:
@@ -73,9 +74,9 @@ Timer 0 also has a few register/flags that define certain values:
 |PWM Phase Correct |0 	     |0        |1        |0xFF   |Top            |Bottom        |
 |CTC               |0 	     |1        |0        |`OCRA` |Immediate      |Max           |
 |Fast PWM          |0 	     |1        |1        |0xFF   |Bottom         |Max           |
-|**RESERVED**      |1 	     |0        |0        |       |               |              |
+|***RESERVED***    |1 	     |0        |0        |       |               |              |
 |PWM Phase Correct |1 	     |0        |1        |`OCRA` |Top            |Bottom        |
-|**RESERVED**      |1 	     |1        |0        |       |               |              |
+|***RESERVED***    |1 	     |1        |0        |       |               |              |
 |Fast PWM          |1 	     |1        |1        |`OCRA` |Bottom         |Top           |
 
 #### Clock Select Control Bits
