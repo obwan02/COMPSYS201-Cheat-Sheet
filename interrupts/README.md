@@ -22,6 +22,7 @@ These interrupts can detect falling edges, rising edges or a low level on pins I
 - Flag Register: `INTF0/INTF1` are set when the `INT0/INT1` interrupt occurs. 
 
 ### Control Bit Table
+
 `ISCn1` | `ISCn0` | Description
 --------|---------|------------
 0       | 0       | Interrupt on low level on pin `INTn`
@@ -48,6 +49,7 @@ Note the that the `PCINT[7:0]` pins are the GPIO port B pins, `PCINT[14:8]` are 
 
 
 ### Control Bit Table
+
 `PCIEn` | Description
 --------|--------------------
 1       | Enable interrupts for `PCINTn`
