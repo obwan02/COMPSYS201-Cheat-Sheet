@@ -164,6 +164,31 @@ int main() {
 }
 ```
 
+## ADC Interrupt
+This triggers when the ADC has completed a conversion.
+
+- ISR C Name: `ADC_vect`
+- Mask Register: `ADIE` in `ADCSRA`
+- Control Registers: None
+- Flag Register: `ADIF` in `ADCSRA`
+
+### C Code Usage
+
+```c
+
+static volatile uint16_t adc_val; 
+
+ISR(ADC_vect) {
+    adc_val = ADC;
+}
+
+int main() {
+    while(1) {
+        printf("ADC Value: %d", adc_val);
+    }
+}
+```
+
 ## USART TX Complete Interrupt
 NOTHING HERE
 

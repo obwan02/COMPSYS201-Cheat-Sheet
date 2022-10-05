@@ -1,5 +1,3 @@
-# COMPSYS201 Cheat Sheet
-
 This document contains most of the important information about the ATMEGA328P. This page specifically only address functionality available on the device. For an overview of interrupts go to the [interrupt page](interrupts/README.md).
 
 ## Index
@@ -319,6 +317,10 @@ This prescaler scales the internal clock frequency. To get the most accurate res
 |1      |0      |1      |32       |
 |1      |1      |0      |64       |
 |1      |1      |1      |128      |
+
+#### ADC Interrupts
+
+- [ADC Complete Interrupt](interrupts/README.md#adc-interrupt)
 
 ## Serial Communication
 Serial communication is the process of transferring data from one computer to another over 2 or 3 wires. There are multiple different serial protocols (interfaces) for serial communication. The ATMEGA328P has multiple interfaces including "SPI" "USART" and "TWI". In the following sections we will cover the differences between the interfaces, and why each one might be used.
