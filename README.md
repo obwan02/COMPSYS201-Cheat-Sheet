@@ -255,13 +255,32 @@ The **A**nalog to **D**igital **C**onverter is a piece of hardware on the ATMEGA
 - Temperature sensor input channel
 - Interrupt on ADC Conversion Complete
 
-#### Conversion
+**TODO: Timing**
 
-The ADC converts voltages in the range of [GND, VREF] ([0, VREF]). Any value outside that range will be clipped to the highest or smallest value. The VREF value is selected by using the `REFS[1:0]` flags in `ADMUX`.
+The ADC has a quite a few configuration options which will be listed below:
 
-VALUE = (Vin * 2^n) / Vref
+- ADC conversion value: `ADCL` and `ADCH` register for the high and low bits of the conversion result respectively. Can also use just plain `ADC` when writing C code.
 
-Resolution = Vref / 2^n (in V/mV)
+The following flags all exist in `ADMUX`:
+
+- ADC multiplexer selection: bits `MUX[3:0]` in `ADMUX` can be configured to select different ADC input channels (see table).
+- ADC reference voltage:  `REFS[1..0]` in `ADMUX` selects the source for the reference voltage.
+
+The following flags all exist in `ADCSRA`:
+
+- ADC enable flag: `ADEN`
+- ADC start conversion flag: setting the `ADSC` bit will start the ADC conversion.
+- ADC autotrigger enable: `ADATE` allows starting a conversion using a trigger signal
+- ADC interrupt flag: `ADIF` is set to one when the ADC conversion is complete
+- ADC interrupt enable flag: `ADIE` activates the ADC conversion complete interrupt
+- ADC prescaler bits: `ADPS[2:0]` configure the prescaler value for the ADC
+
+The following flags all exist in `ADCSRB`:
+
+- ADC analog comparator multiplixer enable: ???
+- ADC auto trigger source: `ADTS[2..0]` selects which source will trigger an ADC conversion. `ADATE` bit must be set to use this feature.
+
+Finally the `ADCxD` bits (bits 0-5) in the `DIDR0` register can disable the digital input buffer on the corresponding pin to save power (and reduce noise).
 
 #### Input Channel Selection
 
@@ -288,6 +307,8 @@ The input pin for the ADC can be selected from multiple different values using `
 
 #### Reference Voltage Selection
 
+The reference voltage can be selected by using `REFS[1..0]` in `ADMUX`
+
 | REFS1 | REFS0 | Description |
 |-------|-------|-------------|
 |0      |0      | `AREF` pin, internal Vref is turned off |
@@ -295,14 +316,6 @@ The input pin for the ADC can be selected from multiple different values using `
 |1      |0      | ***RESERVED*** |
 |1      |1      | Internal 1.1V reference is used with external capacitor at `AREF` pin |
 
-#### ADC Control and Status Register
-The `ADCSRA` registers is an important register that configures many options for the ADC. Below is a list of flags that can be set in the `ADCSRA` register to configure the ADC:
-
-- ADC enable flag: `ADEN`
-- ADC start conversion flag: setting the `ADSC` bit will start the ADC conversion.
-- ADC interrupt flag: `ADIF` is set to one when the ADC conversion is complete
-- ADC interrupt enable flag: `ADIE` activates the ADC conversion complete interrupt
-- ADC prescaler bits: `ADPS[2:0]` configure the prescaler value for the ADC
 
 ##### ADC Prescaler
 This prescaler scales the internal clock frequency. To get the most accurate results, an ADC frequency of 50kHz -> 200kHz is desired. E.g. a 16MHz clock with a prescaler of 128, gives an ADC clock of 125kHz, which is acceptable. The `ADPS[2:0]` flags in the `ADCSRA` register control the prescaler:
@@ -317,6 +330,13 @@ This prescaler scales the internal clock frequency. To get the most accurate res
 |1      |0      |1      |32       |
 |1      |1      |0      |64       |
 |1      |1      |1      |128      |
+
+#### Conversion
+The ADC converts voltages in the range of [GND, VREF] ([0, VREF]). Any value outside that range will be clipped to the highest or smallest value. The VREF value is selected by using the `REFS[1:0]` flags in `ADMUX`.
+
+VALUE = (Vin * 2^n) / Vref
+
+Resolution = Vref / 2^n (in V/mV)
 
 #### ADC Interrupts
 
