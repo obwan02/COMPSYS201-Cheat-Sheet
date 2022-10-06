@@ -331,6 +331,22 @@ This prescaler scales the internal clock frequency. To get the most accurate res
 |1      |1      |0      |64       |
 |1      |1      |1      |128      |
 
+#### ADC Auto Trigger Source
+
+Settings these bits will only have an effect if `ADATE` is set. The `ADTS[2..0]` bits all reside in the `ADCSRB` register.
+
+| ADTS2 | ADTS1 | ADTS0 | Source  |
+|-------|-------|-------|---------|
+|0      |0      |0      | Free running mode   			 |
+|0      |0      |1      | Analog comparator        		 |
+|0      |1      |0      | External interrupt request 0   |
+|0      |1      |1      | Timer/Counter0 compare match A |
+|1      |0      |0      | Timer/Counter0 overflow        |
+|1      |0      |1      | Timer/Counter1 compare match B |
+|1      |1      |0      | Timer/Counter1 overflow        |
+|1      |1      |1      | Timer/Counter1 capture event   |
+
+
 #### Conversion
 The ADC converts voltages in the range of [GND, VREF] ([0, VREF]). Any value outside that range will be clipped to the highest or smallest value. The VREF value is selected by using the `REFS[1:0]` flags in `ADMUX`.
 
